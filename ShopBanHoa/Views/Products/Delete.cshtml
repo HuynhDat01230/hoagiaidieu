@@ -1,0 +1,72 @@
+﻿@model ShopBanHoa.Models.Product
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Img)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Img)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

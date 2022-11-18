@@ -1,0 +1,70 @@
+﻿@model ShopBanHoa.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container" style="display:flex;padding-left:5.5%;padding-top:2%">
+    <div>
+        <img src="@Html.DisplayFor(model => model.Img)" alt="CoverPage" width="500" height="500" style="cursor:crosshair;border:1px solid black;border-radius:10px" />
+    </div>
+
+    <div style="flex-direction:column;padding-left:10px"></div>
+
+    <div>
+        <form style="border:1px solid black;border-radius:5px;width:620px; padding:17px">
+            <div>
+                <div style="">
+                    <div style="width:570px">
+                        @if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("1") == 0)
+                        {
+                            <div style="display:flex">
+                                <div><label style="font-size:20px;margin-bottom:0px">ID:</label></div>
+                                <div><h2 style="font-size:22px;margin-left:5px;margin-top:2px">@Html.DisplayFor(model => model.ProductID)</h2></div>
+                            </div>
+                        }
+                        <div>
+                            <h2 style="font-size:40px;margin-top:0px">@Html.DisplayFor(model => model.PName)</h2>
+                        </div>
+                        <div style="margin-top:7px"></div>
+                        <div>
+                            <h2 style="font-size: 35px; margin-top: 0px; color: #abd373">@Html.DisplayFor(model => model.PPrice) VND</h2>
+                        </div>
+                        <div style="margin-top:5px"></div>
+
+                    </div>
+
+                    <div style="margin-top:7px"></div>
+
+                    <div style="border: 1px solid black; border-radius: 5px; padding: 10px; margin-bottom: 10px; width: 580px">
+                        <h3>@Html.DisplayFor(model => model.PDescription)</h3>
+                    </div>
+                </div>
+
+                @if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("1") == 0)
+                {
+                    <div style="width:100%;">
+                        <a class="btn btn-success" href="/Products/Edit/@Html.DisplayFor(model => model.ProductID)" style="width: 100%; font-size: 25px; padding-top: 7px; padding-bottom: 7px; border-radius: 7px"><i class="bi bi-pen"></i> Edit </a>
+                        <p></p>
+                        <a class="btn btn-danger" href="/Products/Delete/@Html.DisplayFor(model => model.ProductID)" style="width: 100%; font-size: 25px; padding-top: 7px; padding-bottom: 7px; border-radius: 7px"><i class="bi bi-trash"></i> Delete </a>
+                    </div>
+                }
+                else if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("3") == 0)
+                {
+                    <div style="width:100%;">
+                        <a class="btn btn-success" href="/cart/AddToCart/@Html.DisplayFor(model => model.ProductID)" style="width: 100%; font-size: 25px; padding-top: 7px; padding-bottom: 7px; border-radius: 7px"> <i class="bi bi-cart"></i> Add to Cart </a>
+                    </div>
+                }
+                else
+                {
+                    <div style="width:100%;">
+                        <a class="btn btn-primary" href="/Login/Index" style="width: 100%; font-size: 25px; padding-top: 7px; padding-bottom: 7px; border-radius: 7px"> Want to Buy? Login. </a>
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+</div>

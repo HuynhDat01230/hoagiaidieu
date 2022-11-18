@@ -1,0 +1,79 @@
+﻿@model ShopBanHoa.Models.User
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row justify-content-md-center">
+    <div class="col-md-5">
+        @using (Html.BeginForm("Register", "Login", FormMethod.Post))
+        {
+            //@Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+            <div class="card" style="">
+                <div class="card-header">
+                    <div class="card-title" style="font-size:16px">Register</div>
+                </div>
+                <div style="display:flex">
+                    <div class="card-body" style="background-image: url(/Content/img/backsignup.png);background-size:cover;">
+                        <div class="form-group" style="">
+                            @Html.LabelFor(m => m.Name, new { style = "font-size:16px;color:#023020" })
+                            @Html.TextBoxFor(m => m.Name, "", new { @class = "form-control", @placeholder = "Username", style = "font-size:16px" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "badge badge-danger" })
+                            @if (ViewBag.error != null)
+                            {
+                                <span class="badge badge-danger">@ViewBag.error</span>
+                            }
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { style = "font-size:16px" })
+                            @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email", style = "font-size:16px" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "badge badge-danger" })
+                            @if (ViewBag.error != null)
+                            {
+                                <span class="badge badge-danger">@ViewBag.error</span>
+                            }
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Phone, new { style = "font-size:16px" })
+                            @Html.TextBoxFor(m => m.Phone, "", new { @class = "form-control", @placeholder = "Phone number", style = "font-size:16px" })
+                            @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "badge badge-danger" })
+                            @if (ViewBag.error != null)
+                            {
+                                <span class="badge badge-danger">@ViewBag.error</span>
+                            }
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Address, new { style = "font-size:16px" })
+                            @Html.TextBoxFor(m => m.Address, "", new { @class = "form-control", @placeholder = "Address", style = "font-size:16px" })
+                            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "badge badge-danger" })
+
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { style = "font-size:16px" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", style = "font-size:16px" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "badge badge-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { style = "font-size:16px" })
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confim Password", style = "font-size:16px" })
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "badge badge-danger" })
+                        </div>
+                        <div class="form-group">
+                            <input style="font-size:16px" type="submit" name="submit" class="btn btn-danger" value="Register" />
+                        </div>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        }
+    </div>
+</div>

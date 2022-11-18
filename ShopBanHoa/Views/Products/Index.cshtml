@@ -1,0 +1,68 @@
+﻿
+@model IEnumerable<ShopBanHoa.Models.Product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("1") == 0)
+{
+    <div style="padding-top: 2%"></div>
+    <div class="container-fluid p-5 bg-success text-white text-center" style="border-radius:10px;">
+        <div><h2 sty>Plants (Products)</h2></div>
+        <div><h2 sty>Manage Products</h2></div>
+    </div>
+}
+else if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("3") == 0)
+{
+    <div style="padding-top: 2%"></div>
+    <div class="container-fluid p-5 bg-success text-white text-center" style="border-radius: 10px;">
+        <div><h2 sty>Plants List</h2></div>
+    </div>
+}
+else
+{
+    <div class="container-fluid p-5 bg-success text-white text-center" style="border-radius: 10px;">
+        <div><h2 sty>Plants List</h2></div>
+    </div>
+}
+
+<div style="padding-top:20px"></div>
+
+<div class="container" style="display:flex;padding-left:2px;flex-wrap:wrap;">
+    @foreach (var item in Model)
+    {
+        <div>
+            <div class="col" style="display:flex; flex-wrap:nowrap">
+                <div style="width:185px;margin:0px">
+                    <div class="row" style="width:130px; margin:0px;padding:0px">
+                        <div class="col-sm-2" style="width:130px">
+                            <img src="@Html.DisplayFor(modelItem => item.Img)" alt="CoverPage" width="120" height="150">
+
+
+                            <h5 style="margin-top: 0px; font-weight: 500 ;text-align:center;height:30px">@Html.DisplayFor(modelItem => item.PName)</h5>
+                        </div>
+                    </div>
+
+                    <div class="row" style="width:110px; padding-left:20px;margin:0px;">
+                        @Html.ActionLink("Details", "Details", new { id = item.ProductID }, new { @class = "btn btn-info" })
+                        <p style="padding-bottom:0px;height:0px;margin-bottom:3px"></p>
+                    </div>
+
+                </div>
+            </div>
+            <div style="padding-top:20px"></div>
+        </div>
+    }
+</div>
+
+<div style="padding-top:20px"></div>
+
+@if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("2") == 0)
+{
+    <div style="display:flex">
+        <p style="align-items:flex-end">
+            @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+        </p>
+    </div>
+}
+

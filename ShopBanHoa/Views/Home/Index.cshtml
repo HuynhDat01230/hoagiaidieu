@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("1") == 0)
+{
+    <div class="jumbotron" style="background-image: url(https://img.freepik.com/free-photo/grey-paper-texture_1253-25.jpg?w=2000); height: 250px; background-size: cover ">
+        <div style="display: flex; padding-top: 15px; padding-left: 15px; margin-top: 15px">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Leaf_icon_15.svg/2006px-Leaf_icon_15.svg.png" style="width:80px;height:80px" />
+            <h1 style="color:white;font-size:68px">HoaGiaiDieu Admin Page</h1>
+        </div>
+        <div style="padding-left:15px">
+            <p class="lead" style="color:white; font-weight:500">For admins to manage page and account.</p>
+        </div>
+    </div>
+}
+else if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("2") == 0)
+{
+    <div class="jumbotron" style="background-image: url(https://i.pinimg.com/originals/b3/60/27/b3602756104b8dc8ec865f42869eab60.jpg); height: 250px; background-size: cover ">
+        <div style="display:flex">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Leaf_icon_15.svg/2006px-Leaf_icon_15.svg.png" style="width:80px;height:80px" />
+            <h1 style="color:white;font-size:70px">GreenEarth Store Co.</h1>
+        </div>
+
+        <p class="lead" style="color:white; font-weight:500">For shop owner to manage products.</p>
+
+    </div>
+}
+else
+{
+    <div class="jumbotron" style="background-image: url(https://cdn.discordapp.com/attachments/844071485689036803/1040472400980099113/banner.png); height: 250px; background-size: cover; border-radius: 10px ">
+        <div style="display: flex; padding-top:15px;padding-left:15px;margin-top:15px">
+            <img src="https://img.icons8.com/arcade/512/bunch-flowers.png" style="width:80px;height:80px" />
+            <h1 style="color:black;font-size:70px">HoaGiaiDieu</h1>
+        </div>
+        <div style="padding-left:15px">
+            <p class="lead" style="color:darkred; font-weight:500">Dành cho mọi người, cho mọi nhà. Trao tình yêu thương khắp muôn nơi.</p>
+        </div>
+    </div>
+}
+
+
+@if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("1") == 0)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Manage Users</h2>
+            <p style="font-size: 15px; margin-bottom: 5px">For quicker and easier way to manage users.</p>
+            <a class="btn btn-primary" href="@Url.Action("Create","Users")">Create New User</a>
+
+            <p style="margin-top:20px"></p>
+
+            <p style="font-size: 15px; margin-bottom: 5px">For quicker and easier way to manage user types.</p>
+            <a class="btn btn-primary" href="@Url.Action("Create","UserTypes")">Create New User Types</a>
+        </div>
+
+    </div>
+}
+else if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("3") == 0)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Plants</h2>
+            <p style="font-size: 15px; margin-bottom: 5px">
+                Take a look at our plants a get closer to nature.
+            </p>
+            <a class="btn btn-primary" href="@Url.Action("Index","Products")" style="font-size:12px">Watch our plants</a>
+
+            <p style="margin-top:20px"></p>
+
+            <p style="font-size:15px;margin-bottom:5px">
+                Want to take a look at your Cart?
+            </p>
+            <a class="btn btn-primary" href="@Url.Action("Index","Cart")" style="font-size:12px">Check your Cart.</a>
+
+        </div>
+        <div class="col-md-4">
+            <h2>Want to know more or contact Us?</h2>
+            <p style="font-size: 15px; margin-bottom: 5px">
+                Want to know about Us?
+            </p>
+            <a class="btn btn-info" href="@Url.Action("About","Home")" style="font-size:12px">About Us.</a>
+
+            <p style="margin-top:20px"></p>
+
+            <p style="font-size:15px;margin-bottom:5px">
+                Or contact Us?
+            </p>
+            <a class="btn btn-info" href="@Url.Action("Contact","Home")" style="font-size:12px">Contact Us.</a>
+        </div>
+
+    </div>
+}
+else if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("2") == 0)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Manage Product</h2>
+            <p style="font-size: 15px; margin-bottom: 5px">
+                For quicker and easier way to manage product.
+            </p>
+            <a class="btn btn-primary" href="@Url.Action("Create","Products")" style="font-size:12px">Create New Product</a>
+        </div>
+        <div class="col-md-4">
+            <h2>Manage Categories</h2>
+            <p style="font-size: 15px; margin-bottom: 5px">For quicker and easier way to manage categories.</p>
+            <a class="btn btn-primary" href="@Url.Action("Index","Categories")" style="font-size:12px">Create new Category.</a>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Account</h2>
+            <p style="font-size: 15px; margin-bottom: 5px">
+                Login to buy our plants and bring nature back to your lovely place.
+            </p>
+            <a class="btn btn-primary" href="@Url.Action("Index","Login")" style="font-size:12px">Login to your Account.</a>
+
+            <p style="margin-top:20px"></p>
+
+            <p style="font-size:15px;margin-bottom:5px">
+                New to Us? Sign Up now!
+            </p>
+            <a class="btn btn-danger" href="@Url.Action("Register","Login")" style="font-size:12px">Create your new Account.</a>
+
+        </div>
+        <div class="col-md-4">
+            <h2>Plants</h2>
+            <p style="font-size: 15px; margin-bottom: 5px">Take a look at our plants and make yourself fresh.</p>
+            <a class="btn btn-primary" href="@Url.Action("Index","Products")" style="font-size:12px">View our plants.</a>
+
+        </div>
+
+    </div>
+}

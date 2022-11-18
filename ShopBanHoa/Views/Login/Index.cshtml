@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <h1 style="text-align:center">Login Page</h1>
+    <div style="margin-top:20px; text-align:center"></div>
+
+    <div style="margin: auto; text-align: center; width: 570px">
+        <form style="border:1px solid black ; padding:15px; border-radius:5px" method="post" action="@Url.Action("Login", "Login")">
+            <div style="display:flex">
+                <div style="text-align:left;padding-top:60px">
+                    <div>
+                        <h3 style="">Username: </h3>
+                        <input type="text" name="username" style=" border-radius:5px;font-size:16px;width:230px">
+                    </div>
+
+                    <div style="margin-top:7px"></div>
+
+                    <div>
+                        <h3>Password: </h3>
+                        <input type="password" name="password" style=" border-radius: 5px; font-size: 16px; width: 230px">
+                    </div>
+
+                    <div style="margin-top:7px"></div>
+                    <input type="submit" value="Login" class="btn btn-primary" style="font-size: 14px; width: 230px;height:35px">
+                    <div style="margin-top:10px"></div>
+                    <div style="text-align:center;font-size:13px"><a>New to Us? <a style="" href="/Login/Register">Sign Up here!</a></a></div>
+
+                    <div style="margin-top:7px"></div>
+                    @ViewBag.error
+                </div>
+                <div style="margin-left:12px">
+                    <img src="https://bloomscape.com/wp-content/uploads/2021/10/bloomscape_pet-peromia-collectionV2_xs_basalt.jpg?ver=610365" style="width:300px;height:300px;border-radius:7px" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>
+
