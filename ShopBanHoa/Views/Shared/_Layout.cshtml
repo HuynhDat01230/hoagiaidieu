@@ -41,7 +41,10 @@
                     @if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("3") == 0)
                     {
                         <li class="nav-item dropdown" style="height:25px;margin-top:12px">
-                            <h5>@Html.ActionLink("Product", "Index", "Products", new { area = "" }, new { @class = "nav-link active", style = "font-size:17px;margin-top:11px;padding-right:30px" })</h5>
+                            <h5>@Html.ActionLink("Product", "Index", "Products", new { area = "" }, new { @class = "nav-link active", style = "font-size:17px;margin-top:11px;padding-right:30px" })</h5>                           
+                        </li>
+                        <li>
+                            <h5>@Html.ActionLink("History", "PurchaseHistory", "Users", new { id = @Session["userID"] }, new { @class = "nav-link active", style = "font-size:17px;margin-top:11px;padding-right:30px" })</h5>
                         </li>
                     }
                     @if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("1") == 0)
@@ -72,7 +75,7 @@
                             <li><a style="">@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "dropdown-item" })</a></li>
                             <li><a class="dropdown-item" href="#">@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "dropdown-item" })</a></li>
                             @*<li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>*@
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>*@
                         </ul>
                     </li>
 
@@ -80,98 +83,100 @@
 
                 @if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("1") == 0)
                 {
-                    using (Html.BeginForm("SearchFunctionUser", "Users", FormMethod.Get, new { style = "height:40px" }))
-                    {
+                    <form action="/Users/Index" method="post">
                         <div>
                             <div style="display:flex">
                                 <div>
                                     <b style="color:white"> Search Option: </b>
                                 </div>
                                 <div style="padding-left:10px">
-                                    @Html.RadioButton("optionU", "Name", new { style = "margin-top:0px" }) <b style="color:white">Username</b>
+                                    <input type="radio" value="Name" name="optionU" style="margin-top: 0px">
+                                    <b style="color:white">Username</b>
                                 </div>
                                 <div style="padding-left:10px">
-                                    @Html.RadioButton("optionU", "UserTypeID", new { style = "margin-top:0px;" }) <b style="color:white;margin-bottom:0px">User Type</b>
+                                    <input type="radio" value="UserTypeID" name="optionU" style="margin-top: 0px">
+                                    <b style="color:white;margin-bottom:0px">User Type</b>
                                 </div>
                             </div>
                             <div>
-                                @Html.TextBox("searchU", " ", new { @class = "sss", style = "border-radius: 10px; width:250px;margin-right:50px;padding-left:10px" })
+                                <input type="text" name="searchU" style="border-radius: 10px; width: 300px; margin-right: 50px; padding-left: 10px">
                                 <input type="submit" name="submit" placeholder="Search" style="display:none" />
                             </div>
                         </div>
-                    }
+                    </form>
                 }
                 @if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("2") == 0)
                 {
-                    using (Html.BeginForm("SearchFunction", "Products", FormMethod.Get, new { style = "height:40px" }))
-                    {
+                    <form action="/Products/Index" method="post">
                         <div>
                             <div style="display:flex">
                                 <div>
                                     <b style="color:white"> Search Option: </b>
                                 </div>
                                 <div style="padding-left:10px">
-                                    @Html.RadioButton("option", "PName", new { style = "margin-top:0px" }) <b style="color:white">Name</b>
+                                    <input type="radio" value="PName" name="option" style="margin-top: 0px">
+                                    <b style="color:white">Name</b>
                                 </div>
-                                <div style="padding-left:20px">
-                                    @Html.RadioButton("option", "CategoryId", new { style = "margin-top:0px;" }) <b style="color:white;margin-bottom:0px">Plant Type</b>
+                                <div style="padding-left:10px">
+                                    <input type="radio" value="CategoryId" name="option" style="margin-top: 0px">
+                                    <b style="color:white;margin-bottom:0px">Plant Type</b>
                                 </div>
                             </div>
                             <div>
-                                @Html.TextBox("search", " ", new { @class = "sss", style = "border-radius: 10px; width:300px;margin-right:50px;padding-left:10px" })
+                                <input type="text" name="search" style="border-radius: 10px; width: 300px; margin-right: 50px; padding-left: 10px">
                                 <input type="submit" name="submit" placeholder="Search" style="display:none" />
                             </div>
                         </div>
-                    }
+                    </form>
                 }
                 @if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("3") == 0)
                 {
-                    using (Html.BeginForm("SearchFunction", "Products", FormMethod.Get, new { style = "height:40px" }))
-                    {
+                    <form action="/Products/Index" method="post">
                         <div>
                             <div style="display:flex">
                                 <div>
                                     <b style="color:white"> Search Option: </b>
                                 </div>
                                 <div style="padding-left:10px">
-                                    @Html.RadioButton("option", "PName", new { style = "margin-top:0px" }) <b style="color:white">Name</b>
+                                    <input type="radio" value="PName" name="option" style="margin-top: 0px">
+                                    <b style="color:white">Name</b>
                                 </div>
                                 <div style="padding-left:10px">
-                                    @Html.RadioButton("option", "CategoryId", new { style = "margin-top:0px;" }) <b style="color:white;margin-bottom:0px">Plant Type</b>
+                                    <input type="radio" value="CategoryId" name="option" style="margin-top: 0px">
+                                    <b style="color:white;margin-bottom:0px">Plant Type</b>
                                 </div>
                             </div>
                             <div>
-                                @Html.TextBox("search", " ", new { @class = "sss", style = "border-radius: 10px; width:250px;margin-right:50px;padding-left:10px" })
+                                <input type="text" name="search" style="border-radius: 10px; width: 300px; margin-right: 50px; padding-left: 10px">
                                 <input type="submit" name="submit" placeholder="Search" style="display:none" />
                             </div>
                         </div>
-                    }
+                    </form>
                 }
                 @if (Session["username"] == "" || Session["username"] == null)
                 {
-                    using (Html.BeginForm("SearchFunction", "Products", FormMethod.Get, new { style = "height:40px" }))
-                    {
+                    <form action="/Products/Index" method="post">
                         <div>
                             <div style="display:flex">
                                 <div>
                                     <b style="color:white"> Search Option: </b>
                                 </div>
                                 <div style="padding-left:10px">
-                                    @Html.RadioButton("option", "PName", new { style = "margin-top:0px" }) <b style="color:white">Name</b>
+                                    <input type="radio" value="PName" name="option" style="margin-top: 0px">
+                                    <b style="color:white">Name</b>
                                 </div>
                                 <div style="padding-left:10px">
-                                    @Html.RadioButton("option", "CategoryId", new { style = "margin-top:0px;" }) <b style="color:white;margin-bottom:0px">Plant Type</b>
+                                    <input type="radio" value="CategoryId" name="option" style="margin-top: 0px">
+                                    <b style="color:white;margin-bottom:0px">Plant Type</b>
                                 </div>
                             </div>
                             <div>
-                                @Html.TextBox("search", " ", new { @class = "sss", style = "border-radius: 10px; width:250px;margin-right:50px;padding-left:10px" })
+                                <input type="text" name="search" style="border-radius: 10px; width: 300px; margin-right: 50px; padding-left: 10px">
                                 <input type="submit" name="submit" placeholder="Search" style="display:none" />
                             </div>
                         </div>
-                    }
+                    </form>
                 }
-
-
 
                 @if (Session["username"] != "" && Session["username"] != null)
                 {

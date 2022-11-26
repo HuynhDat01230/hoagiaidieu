@@ -81,6 +81,7 @@ namespace ShopBanHoa.Controllers
                     }
                     user.UserID = tmp;
                     user.Password = GetMD5(user.Password);
+                    user.ConfirmPassword = GetMD5(user.ConfirmPassword);
                     user.UserTypeID = 3;
                     db.Configuration.ValidateOnSaveEnabled = false;
                     db.Users.Add(user);

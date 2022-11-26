@@ -14,12 +14,32 @@ namespace ShopBanHoa.Controllers
     public class ProductsController : Controller
     {
         private QLBHEntities db = new QLBHEntities();
-
+        
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(string option, string search, int CategoriesID = 0)
         {
-            var products = db.Products.Include(p => p.Category);
-            return View(products.ToList());
+            List<Category> cate = db.Categories.ToList();
+            var product = db.Products.Include(p => p.Category);
+            SelectList cateList = new SelectList(cate, "CategoryId", "CategoryName");
+            ViewBag.CategoriesID = cateList;
+            if(CategoriesID != 0)
+            {
+                product = product.Where(s => s.CategoryId == CategoriesID);
+                
+            }
+            if (option == "PName")
+            {
+                product = product.Where(s => s.PName.StartsWith(search));
+                //return View(db.Users.Where(x => x.Name.StartsWith(searchU)).ToList());
+            }
+            else if (option != null)
+            {
+                int i = int.Parse(search);
+                product = product.Where(s => s.CategoryId == i);
+
+                //return View(db.Users.Where(x => x.UserTypeID == i).ToList());
+            }
+            return View(product.ToList());
         }
 
         // GET: Products/Details/5
@@ -140,18 +160,23 @@ namespace ShopBanHoa.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult SearchFunction(string option, string search)
+        /*public ActionResult SearchFunction(string option, string search)
         {
+            var product = db.Products.Include(p => p.Category);
             if (option == "PName")
             {
-                return View(db.Products.Where(x => x.PName.Contains(search) || search == null).ToList());
+                product = product.Where(s => s.PName.StartsWith(search));
+                //return View(db.Users.Where(x => x.Name.StartsWith(searchU)).ToList());
             }
-            else
+            else if (option != null)
             {
                 int i = int.Parse(search);
-                return View(db.Products.Where(x => x.CategoryId == i || search == null).ToList());
+                product = product.Where(s => s.CategoryId == i);
+
+                //return View(db.Users.Where(x => x.UserTypeID == i).ToList());
             }
-        }
+            return View(product.ToList());
+        }*/
 
         [HttpPost]
         public ActionResult imgupload(FormCollection fc, HttpPostedFileBase file)

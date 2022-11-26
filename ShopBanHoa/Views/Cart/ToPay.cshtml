@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "ToPay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid p-5 bg-success text-white text-center" style="border-radius:10px">
+    <div><h1 sty>Payment</h1></div>
+</div>
+
+<div style="padding-top:20px"></div>
+
+
+<div style="text-align:center;margin:auto;width:400px">
+    <form action="/cart/ToPays" method="post" style="border:1px solid black;padding:15px;border-radius:5px;background-color:whitesmoke">
+        <h1>Thông tin Khách hàng</h1>
+        <div style="margin-bottom:20px"></div>
+        <div>
+
+
+            <div style="">
+                <div><h3>Buying Date: </h3></div>
+                <div><input name="Datebuy" placeholder="mm/dd/yyyy" value="@DateTime.Now" style="font-size:16px;border-radius:5px" /></div>
+            </div>
+
+            <div style="">
+                <div><h3>Customer's Name: </h3></div>
+                <div><input name="CustomName" style="font-size:16px;border-radius:5px" /></div>
+            </div>
+
+            <div style="">
+                <div><h3>Total:  </h3></div>
+                <div><input name="Total" value=@Session["sumtotal"] style="font-size:16px;border-radius:5px" /></div>
+            </div>
+
+            <div style="margin-top:15px">
+                <div><input type="submit" value="Thanh toán" class="btn btn-danger" onclick="return confirm('Đặt hàng thành công');" style="font-size:16px;" /></div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<form action="/cart/ToPays" method="post">
+    <table class="table-bordered">
+        <tr>
+            <td>
+            </td>
+        </tr>
+    </table>
+</form>
+
+@Html.ActionLink("Back to Cart", "Index")
+
+

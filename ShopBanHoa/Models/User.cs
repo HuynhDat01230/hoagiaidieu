@@ -37,11 +37,11 @@ namespace ShopBanHoa.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Yêu cầu tên người dùng")]
-        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$", ErrorMessage ="Tối thiểu 8 ký tự, cả số và chữ")]
+        
         public string Password { get; set; }
 
         [Required]
-        [RegularExpression(@"/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/", ErrorMessage = "Nhập sai số điện thoại")]
+        
         public string Phone { get; set; }
 
         [Required]

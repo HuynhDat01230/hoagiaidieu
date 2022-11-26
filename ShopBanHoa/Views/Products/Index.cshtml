@@ -17,14 +17,31 @@ else if (Session["username"] != "" && Session["username"] != null && Session["us
     <div style="padding-top: 2%"></div>
     <div class="container-fluid p-5 bg-success text-white text-center" style="border-radius: 10px;">
         <div><h2 sty>Plants List</h2></div>
+        <form action="/Products/Index" method="post">
+            <div>
+                @Html.DropDownList("CategoriesID", "Chọn loại cây")
+                <input type="submit" name="submit" placeholder="Search" style="display:block" />
+            </div>
+        </form>
     </div>
 }
 else
 {
     <div class="container-fluid p-5 bg-success text-white text-center" style="border-radius: 10px;">
         <div><h2 sty>Plants List</h2></div>
+        
+        
     </div>
 }
+
+<div style="padding-top:20px"></div>
+
+<form action="/Products/Index" method="post">
+    <div style="display:flex">
+        @Html.DropDownList("CategoriesID", null ,"Chọn loại cây", new { style = "width:250px;text-align:center;height:30px;font-size:18px" })
+        <input type="submit" name="submit" placeholder="Search" style="display:block;margin-left:5px" />
+    </div>
+</form>
 
 <div style="padding-top:20px"></div>
 
@@ -57,7 +74,7 @@ else
 
 <div style="padding-top:20px"></div>
 
-@if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("2") == 0)
+@if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("1") == 0)
 {
     <div style="display:flex">
         <p style="align-items:flex-end">

@@ -26,7 +26,7 @@ namespace ShopBanHoa.Models
         public string PName { get; set; }
         public string PType { get; set; }
         public Nullable<double> PPrice { get; set; }
-        
+        [DataType(DataType.MultilineText)]
         public string PDescription { get; set; }
         public Nullable<int> CategoryId { get; set; }
         

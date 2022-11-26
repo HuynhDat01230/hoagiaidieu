@@ -4,9 +4,12 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Security.Cryptography;
 using ShopBanHoa.Models;
+
 
 namespace ShopBanHoa.Controllers
 {
@@ -15,14 +18,53 @@ namespace ShopBanHoa.Controllers
         private QLBHEntities db = new QLBHEntities();
 
         // GET: Users
-        public ActionResult Index()
+        public ActionResult Index(string optionU, string searchU)
         {
             var users = db.Users.Include(u => u.UserType);
+            if (optionU == "Name")
+            {
+                users = users.Where(s => s.Name.StartsWith(searchU));
+                //return View(db.Users.Where(x => x.Name.StartsWith(searchU)).ToList());
+            }
+            else if(optionU !=null)
+            {
+                int i = int.Parse(searchU);
+                users = users.Where(s => s.UserTypeID == i);
+
+                //return View(db.Users.Where(x => x.UserTypeID == i).ToList());
+            }
+            //var users = db.Users.Include(u => u.UserType);
             return View(users.ToList());
         }
+        /*public ActionResult SearchFunctionUser(string optionU, string searchU)
+        {
+            if (optionU == "Name")
+            {
+                return View(db.Users.Where(x => x.Name.StartsWith(searchU)).ToList());
+            }
+            else
+            {
+                int i = int.Parse(searchU);
+                return View(db.Users.Where(x => x.UserTypeID == i).ToList());
+            }
+        }*/
 
         // GET: Users/Details/5
         public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+        // GET: Users/PurchaseHistory/5
+        public ActionResult PurchaseHistory(int? id)
         {
             if (id == null)
             {
@@ -62,6 +104,8 @@ namespace ShopBanHoa.Controllers
                 }
                 user.UserID = tmp;
                 Session["UserID"] = user.UserID.ToString();
+                user.Password = GetMD5(user.Password);
+                user.ConfirmPassword = GetMD5(user.ConfirmPassword);
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -138,19 +182,21 @@ namespace ShopBanHoa.Controllers
             }
             base.Dispose(disposing);
         }
-
-        public ActionResult SearchFunctionUser(string optionU, string searchU)
-
+        
+        
+        public static string GetMD5(string str)
         {
-            if (optionU == "Name")
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] fromData = Encoding.UTF8.GetBytes(str);
+            byte[] targetData = md5.ComputeHash(fromData);
+            string byte2String = null;
+
+            for (int i = 0; i < targetData.Length; i++)
             {
-                return View(db.Users.Where(x => x.Name.StartsWith(searchU) || searchU == null).ToList());
+                byte2String += targetData[i].ToString("x2");
+
             }
-            else
-            {
-                int i = int.Parse(searchU);
-                return View(db.Users.Where(x => x.UserTypeID == i || searchU == null).ToList());
-            }
+            return byte2String;
         }
     }
 }
