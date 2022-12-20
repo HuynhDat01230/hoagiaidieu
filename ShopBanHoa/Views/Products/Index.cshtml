@@ -29,8 +29,7 @@ else
 {
     <div class="container-fluid p-5 bg-success text-white text-center" style="border-radius: 10px;">
         <div><h2 sty>Plants List</h2></div>
-        
-        
+               
     </div>
 }
 
@@ -38,10 +37,12 @@ else
 
 <form action="/Products/Index" method="post">
     <div style="display:flex">
-        @Html.DropDownList("CategoriesID", null ,"Chọn loại cây", new { style = "width:250px;text-align:center;height:30px;font-size:18px" })
+        @Html.DropDownList("CategoriesID", null, "Hiển thị tất cả", new { style = "width:250px;text-align:center;height:30px;font-size:18px" })
         <input type="submit" name="submit" placeholder="Search" style="display:block;margin-left:5px" />
     </div>
+    
 </form>
+
 
 <div style="padding-top:20px"></div>
 
@@ -56,19 +57,19 @@ else
                             <img src="@Html.DisplayFor(modelItem => item.Img)" alt="CoverPage" width="120" height="150">
 
 
-                            <h5 style="margin-top: 0px; font-weight: 500 ;text-align:center;height:30px">@Html.DisplayFor(modelItem => item.PName)</h5>
+                            <h5 id="productName" style="margin-top: 0px; font-weight: 500 ;text-align:center;height:30px">@Html.DisplayFor(modelItem => item.PName)</h5>
                         </div>
                     </div>
 
-                    <div class="row" style="width:110px; padding-left:20px;margin:0px;">
+                    <div id="@item.PName.ToString()+detailsbtn" class="row" style="width:110px; padding-left:20px;margin:0px;">
                         @Html.ActionLink("Details", "Details", new { id = item.ProductID }, new { @class = "btn btn-info" })
                         <p style="padding-bottom:0px;height:0px;margin-bottom:3px"></p>
                     </div>
-
                 </div>
             </div>
             <div style="padding-top:20px"></div>
         </div>
+        
     }
 </div>
 
@@ -78,7 +79,7 @@ else
 {
     <div style="display:flex">
         <p style="align-items:flex-end">
-            @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+            @Html.ActionLink("Tạo mới", "Create", "", new { @class = "btn btn-primary" })
         </p>
     </div>
 }

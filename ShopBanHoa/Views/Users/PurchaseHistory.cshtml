@@ -73,6 +73,7 @@
     @Html.ActionLink("Back to List", "Index")
 </p>
 *@
+<div style="padding-top:10px"></div>
 <h4>Lịch sử giao dịch</h4>
 <ul>
     @if (Model.Carts.Count > 0)
@@ -82,7 +83,7 @@
             if (item.UserID.ToString().CompareTo(Model.UserID.ToString()) == 0)
             {
                 <li>
-                    <a target="_blank" href="@Url.Action("Details", "Carts", new { id = item.CartID})">  Ngày mua: @item.Datebuy </a><span> | Tổng tiền: @item.Total</span>
+                    <a target="_blank" href="@Url.Action("Index", "Cart", new { id = item.CartID })">  Ngày mua: @item.Datebuy </a><span> | Tổng tiền: @item.Total</span>
                 </li>
             }
         }

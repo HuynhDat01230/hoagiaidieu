@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using ShopBanHoa.Models;
+using System.Dynamic;
+
 
 namespace ShopBanHoa.Controllers
 {
@@ -18,8 +20,13 @@ namespace ShopBanHoa.Controllers
         // GET: Products
         public ActionResult Index(string option, string search, int CategoriesID = 0)
         {
+            
+            var comments = db.Reviews.Include(c => c.Product).Include(c => c.User);
+            ViewBag.comments = comments.ToList();
             List<Category> cate = db.Categories.ToList();
             var product = db.Products.Include(p => p.Category);
+            List<Product> price = db.Products.ToList();
+            var productprice = db.Products.Include(p => p.PPrice);
             SelectList cateList = new SelectList(cate, "CategoryId", "CategoryName");
             ViewBag.CategoriesID = cateList;
             if(CategoriesID != 0)
@@ -29,22 +36,24 @@ namespace ShopBanHoa.Controllers
             }
             if (option == "PName")
             {
-                product = product.Where(s => s.PName.StartsWith(search));
+                product = product.Where(s => s.PName.StartsWith(search)); 
                 //return View(db.Users.Where(x => x.Name.StartsWith(searchU)).ToList());
             }
             else if (option != null)
             {
-                int i = int.Parse(search);
-                product = product.Where(s => s.CategoryId == i);
+                //int i = int.Parse(search);
+                product = product.Where(s => s.CategoryId.ToString().StartsWith(search));
 
                 //return View(db.Users.Where(x => x.UserTypeID == i).ToList());
-            }
-            return View(product.ToList());
+            }           
+                return View(product.ToList());  
         }
 
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
+            var comments = db.Reviews.Include(c => c.Product).Include(c => c.User);
+            ViewBag.comments = comments.ToList();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -89,6 +98,50 @@ namespace ShopBanHoa.Controllers
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", product.CategoryId);
             return View(product);    
+        }
+
+        [HttpPost]
+        public ActionResult Details(int? id, int UserID, int productID, int Rating ,string Des)
+        {
+            int ReviewID = 1;
+            var list = db.Reviews;
+
+            for (int i = 1; i <= list.ToList().Count + 1; i++)
+            {
+                Review review1 = db.Reviews.Find(i);
+                if (review1 == null) ReviewID = i;
+            }
+            Review comment = new Review();
+            comment.ReviewID = ReviewID;
+            comment.UserName = Session["username"].ToString();
+            comment.Rating = Rating;
+            comment.Content = Des;
+            comment.UserID = UserID;
+            comment.ProductID = productID;
+            comment.Date = DateTime.Now;
+            db.Reviews.Add(comment);
+            db.SaveChanges();
+
+            var comments = db.Reviews.Include(c => c.Product).Include(c => c.User);
+            ViewBag.comments = comments.ToList();
+            
+
+            Product prod = db.Products.Find(productID);
+            if (prod == null)
+            {
+                return HttpNotFound();
+            }
+            else
+                return View(prod);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteComment(int? id)
+        {
+            Review rev = db.Reviews.Find(id);
+            db.Reviews.Remove(rev);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Products/Edit/5

@@ -141,6 +141,8 @@ namespace ShopBanHoa.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
+                user.Password = GetMD5(user.Password);
+                user.ConfirmPassword = GetMD5(user.ConfirmPassword);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

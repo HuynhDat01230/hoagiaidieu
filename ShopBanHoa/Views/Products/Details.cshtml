@@ -1,5 +1,7 @@
 ﻿@model ShopBanHoa.Models.Product
 
+
+
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -49,22 +51,102 @@
                     <div style="width:100%;">
                         <a class="btn btn-success" href="/Products/Edit/@Html.DisplayFor(model => model.ProductID)" style="width: 100%; font-size: 25px; padding-top: 7px; padding-bottom: 7px; border-radius: 7px"><i class="bi bi-pen"></i> Edit </a>
                         <p></p>
-                        <a class="btn btn-danger" href="/Products/Delete/@Html.DisplayFor(model => model.ProductID)" style="width: 100%; font-size: 25px; padding-top: 7px; padding-bottom: 7px; border-radius: 7px"><i class="bi bi-trash"></i> Delete </a>
+                        <a class="btn btn-danger" href="/Products/Delete/@Html.DisplayFor(model => model.ProductID)" onclick="return confirm('you are sure you want to Pay?');" style="width: 100%; font-size: 25px; padding-top: 7px; padding-bottom: 7px; border-radius: 7px"><i class="bi bi-trash"></i> Delete </a>
                     </div>
                 }
                 else if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("3") == 0)
                 {
                     <div style="width:100%;">
-                        <a class="btn btn-success" href="/cart/AddToCart/@Html.DisplayFor(model => model.ProductID)" style="width: 100%; font-size: 25px; padding-top: 7px; padding-bottom: 7px; border-radius: 7px"> <i class="bi bi-cart"></i> Add to Cart </a>
+                        <a class="btn btn-success" id="btnAddToCart" href="/cart/AddToCart/@Html.DisplayFor(model => model.ProductID)" style="width: 100%; font-size: 25px; padding-top: 7px; padding-bottom: 7px; border-radius: 7px"> <i class="bi bi-cart"></i> Add to Cart </a>
                     </div>
                 }
                 else
                 {
-                    <div style="width:100%;">
+                    <div id="wanttobuybtn" style="width:100%;">
                         <a class="btn btn-primary" href="/Login/Index" style="width: 100%; font-size: 25px; padding-top: 7px; padding-bottom: 7px; border-radius: 7px"> Want to Buy? Login. </a>
                     </div>
                 }
             </div>
         </form>
+    </div>
+</div>
+<div>
+    <div style="padding-top:20px"></div>
+    <h2>Các review về sản phẩm</h2>
+    @*using (Html.BeginForm("Create", "Reviews", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            if (Session["username"] != "" && Session["username"] != null)
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("ProductID", Model.ProductID)
+                @Html.TextArea("Content")
+                <input type="submit" value="Đăng" />
+            } else
+            {
+                <h5> @Html.ActionLink("Đăng nhập để bình luận về sản phẩm", "Register", "Login", new { area = "" }, new { @class = "link-primary", style = "font-size:17px;margin-top:11px;padding-right:30px" }) </h5>
+            }
+
+        }*@
+    @if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("3") == 0)
+    {
+        <form action="/Products/Details" method="post">
+            <input name="UserID" class="form-control" type="number" value=@Session["userid"] hidden />
+            <input name="ProductID" class="form-control" type="number" value=@Html.DisplayFor(model => model.ProductID) hidden />
+            <div style="display:flex">
+                <input name="Des" class="form-control" type="text" placeholder="Bình luận của bạn" />
+                <input name="Rating" class="form-control" type="number" min="1" max="5" placeholder="Đánh giá điểm số" />
+                <input type="submit" value="Bình luận" class="btn btn-danger" onclick="return confirm('Bình luận đã gửi');" />
+            </div>
+        </form>
+    }
+    @if (Session["username"] == "" && Session["username"] == null)
+    {
+        <h5> @Html.ActionLink("Đăng nhập để bình luận về sản phẩm", "Register", "Login", new { area = "" }, new { @class = "link-primary", style = "font-size:17px;margin-top:11px;padding-right:30px" }) </h5>
+    }
+    <div id="comments">
+        <div>
+            @foreach (var item in @ViewBag.comments)
+            {
+                if (item.ProductID == Model.ProductID)
+                {
+                    <div style="border:solid 1px;border-color:black;border-radius:7px;padding-left:8px;padding-top:7px">
+                        <div>
+                            <div style="display:flex">
+                                <p style="margin-bottom:7px;font-weight:650;font-size:13pt">@item.User.Name </p>
+                                <p style="margin-bottom: 7px; padding-left: 5px; font-size: 13pt"> vào lúc : @item.Date</p>
+                                <p style="margin-bottom: 7px; padding-left: 20px; font-size: 13pt"> Điểm đánh giá:</p>
+                                <p style="margin-bottom: 7px; padding-left: 5px; font-size: 13pt;color:fuchsia">@item.Rating</p>
+                                <p style="margin-bottom: 7px; padding-left: 2px; font-size: 13pt;">/</p>
+                                <p style="margin-bottom: 7px; padding-left: 2px; font-size: 13pt;">5</p>
+                            </div>
+                            <div>
+                                <p style="margin-bottom: 7px; font-size: 13pt">@item.Content</p>
+                            </div>
+                            @if (Session["username"] != "" && Session["username"] != null && Session["userType"].ToString().CompareTo("1") == 0)
+                            {
+                                <form action="/Products/DeleteComment" method="post">
+                                    <input name="id" class="form-control" type="number" value=@item.ReviewID hidden />
+                                    <input type="submit" value="Delete" class="form-control" onclick="return confirm('Đã xóa bình luận');" />
+                                </form>
+                            }
+
+
+                        </div>
+                    </div>
+                    <div style="padding-bottom:8px"></div>
+                }
+            }
+        </div>
+        @*foreach (var item in ViewBag.comments)
+            {
+                <div class="comment">
+                    <div style="display:flex">
+                        <div class="UName">@item.UserName</div>
+                        <div style="padding-left:10px"></div>
+                        <div class="Date">@item.Date</div>
+                    </div>
+                    <div class="UComment">@item.Content</div>
+                </div>
+            }*@
     </div>
 </div>

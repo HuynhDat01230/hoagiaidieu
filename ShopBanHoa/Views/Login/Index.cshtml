@@ -3,6 +3,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .btn-primary-custom {
+        background-color: #1e90ff;
+        color: white;
+    }
+    .btn-primary-custom:hover {
+        background-color: darkblue;
+        color: white;
+    }
+</style>
+
 <!DOCTYPE html>
 
 <html>
@@ -10,7 +21,7 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
-    <h1 style="text-align:center">Login Page</h1>
+    <h1 id="titleLoginPage" style="text-align:center">Login Page</h1>
     <div style="margin-top:20px; text-align:center"></div>
 
     <div style="margin: auto; text-align: center; width: 570px">
@@ -30,7 +41,7 @@
                     </div>
 
                     <div style="margin-top:7px"></div>
-                    <input type="submit" value="Login" class="btn btn-primary" style="font-size: 14px; width: 230px;height:35px">
+                    <input type="submit" id="loginbtn" value="Login" class="btn btn-primary-custom" style="font-size: 14px; width: 230px;height:35px">
                     <div style="margin-top:10px"></div>
                     <div style="text-align:center;font-size:13px"><a>New to Us? <a style="" href="/Login/Register">Sign Up here!</a></a></div>
 
